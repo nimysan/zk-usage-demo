@@ -1,12 +1,13 @@
 package com.vluee.demo.zkdemo;
 
-import org.apache.zookeeper.*;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooKeeper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-
-import static org.apache.zookeeper.ZooDefs.Ids.OPEN_ACL_UNSAFE;
 
 
 public class ZkOperation implements Watcher {
@@ -16,23 +17,24 @@ public class ZkOperation implements Watcher {
 
     public ZkOperation() {
         try {
-            zk = new ZooKeeper("localhost:2188", 30000, this);
+            zk = new ZooKeeper("localhost:2188", 1000, this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void test() throws InterruptedException, KeeperException {
-        zk.create("/test", new byte[0], OPEN_ACL_UNSAFE,
-                CreateMode.PERSISTENT);
-
-        zk.create("/test/lock", new byte[0], OPEN_ACL_UNSAFE,
-                CreateMode.EPHEMERAL);
+//        zk.create("/test", new byte[0], OPEN_ACL_UNSAFE,
+//                CreateMode.PERSISTENT);
+//
+//        zk.create("/test/lock", new byte[0], OPEN_ACL_UNSAFE,
+//                CreateMode.EPHEMERAL);
 //        zk.
 
 //        zk.create("/test/lock", new byte[0], OPEN_ACL_UNSAFE,
 //                CreateMode.EPHEMERAL_SEQUENTIAL);
-        logger.info("test");
+        Thread.sleep(1000 * 5);
+        logger.info("test {}", zk.getState().isAlive());
     }
 
     public static void main(String[] args) throws InterruptedException, KeeperException {

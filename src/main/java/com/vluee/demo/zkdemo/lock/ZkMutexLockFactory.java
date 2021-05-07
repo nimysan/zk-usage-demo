@@ -20,7 +20,7 @@ public class ZkMutexLockFactory implements Watcher {
     public ZkMutexLockFactory() {
         try {
             zk = new ZooKeeper("localhost:2188", 5000, this);
-            logger.info("Zk information: {}" + zk);
+            logger.info("Zk information: {}", zk.getSessionId());
             Stat exists = zk.exists("/lock", false);
             if (exists == null) {
                 zk.create("/lock", new byte[0], OPEN_ACL_UNSAFE,
